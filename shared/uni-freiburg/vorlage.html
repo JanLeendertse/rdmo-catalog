@@ -1,0 +1,433 @@
+{% load view_tags %}
+
+{% get_set 'project/partner' as partners %}
+{% get_set 'project/dataset' as datasets %}
+
+<h1>DMP der Universität Bielefeld</h1>
+
+<h2>1. Allgemeine Angaben zum Forschungsvorhaben</h2>
+
+<p>
+    <b>1.1 Titel des Projektvorhabens</b>
+</p>
+<p>
+    {% render_value 'project/research_question/title' %}
+</p>
+
+<p>
+    <b>1.2 Ziele des Projekts</b>
+</p>
+
+<p>
+    <b>1.3 Externe Projektpartner</b>
+</p>
+<p>
+    {% render_value 'project/partner/name' %}
+</p>
+
+<p>
+    <b>1.4 Projektleiter / Verantwortliche</b>
+</p>
+<p>
+    {% render_value_inline_list 'project/coordination/name' %}
+</p>
+
+<p>
+    <b>1.5 Mitarbeiter und Funktionen</b>
+</p>
+
+<p>
+    <b>1.6 Genehmigte / angestrebte Laufzeit</b>
+</p>
+<p>
+    Projektbeginn: {% render_value 'project/schedule/project_start' %}
+    Projektende: {% render_value 'project/schedule/project_end' %}
+</p>
+
+<p>
+    <b>1.7 Welche Anforderungen gibt es seitens der Projektförderer bezüglich der Erstellung
+    eines DMPs und seiner Durchführung?</b>
+</p>
+<p>
+    {% render_value 'project/funder/requirements' %}
+</p>
+
+<p>
+    <b>1.8 Gibt es für Ihr Projektvorhaben institutionelle oder fakultätsinterne Policies,
+    die in dem DMP berücksicht werden müssen?</b>
+</p>
+<p>
+    {% render_value 'project/additional_requirements/yesno' %}
+    {% render_value 'project/additional_requirements/requirements' %}
+</p>
+
+<p>
+    <b>1.9 Gibt es Abhängigkeiten zu weiteren Policies?</b>
+</p>
+
+<h2>2/ Existierende Daten</h2>
+
+<p>
+    <b>2.1 Baut die Forschungsarbeit auf Daten Dritter oder auf generierte Daten aus anderen
+    abgeschlossenen Projekten (oder auch teilweise) auf?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    Datensatzherkunft: {% render_set_value dataset 'project/dataset/origin' %}/
+    Datensatzerzeuger: {% render_set_value dataset 'project/dataset/creator/name' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>2.1.1 Wenn ja, welche Bedeutung haben die vorhandenen Daten für das Vorhabensziel?
+    Warum sind die Daten wichtig?</b>
+</p>
+
+<p>
+    <b>2.2 Gibt es Möglichkeiten der Nachnutzung existierender Datensätze? Wurde nach diesen
+    innerhalb der eigenen Institution und von anderen diversen Datendrittanbietern recherchiert?</b>
+</p>
+
+<p>
+    <b>2.3 Wie wird die Integration zwischen den bereits existierenden Daten und den neu zu
+    generierenden Daten bewerkstelligt? Wie wird die Nutzung der existierenden
+    Daten dokumentiert?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/technical_integration' %}
+</p>
+{% endfor %}
+
+<h2>3. Im Projekt generierten Daten</h2>
+
+<p>
+    <b>3.1 Beschreiben Sie die Daten, die im Rahmen Ihres Forschungsvorhabens anfallen</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/description' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>3.2 Wie werden Daten erfasst oder erstellt?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/creation_methods' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>3.3 In welchen Dateiformaten werden die Daten vorliegen? Und benötigt man für die Nachnutzung
+    oder Nachvollziehbarkeit der Daten besondere Softwarelösungen
+    (sowohl frei als auch kommerziell)?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/format' %}
+</p>
+{% endfor %}
+
+<h2>4. Datenorganisation</h2>
+
+<p>
+    <b>4.1 Gibt es projektinterne Richtlinie zur Benennung der entstehenden Daten?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/storage/naming' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>4.2 Gibt es auch Richtlinien zur einheitlichen Organisation der Daten?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/storage/organisation' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>4.3 Wie werden Daten von einem Ort zum anderen transferiert (z.B. von lokaler Festplatte
+    auf ein Netzlaufwerk oder Server). Werden Synchronisationsmethoden angewandt?</b>
+</p>
+
+<p>
+    <b>4.4 Wie ist das kollaborative Arbeiten an den selben Dateien geregelt?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/collaboration_organisation' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>4.5 Wie sieht die Versionierungsstrategie für die entstehenden Daten oder Dokumente aus?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/versioning_strategy' %}
+</p>
+{% endfor %}
+
+<h2>5. Administrative und rechtliche Aspekte</h2>
+
+<p>
+    <b>5.1 Existieren für Ihr Projekt Vorgaben seitens der Forschungsförderer bezüglich bestimmter
+    Aspekte des Forschungsdatenmanagements?</b>
+</p>
+<p>
+    {% render_value 'project/funder/requirements' %}
+</p>
+
+<p>
+    <b>5.2 Gibt es bereits Überlegungen, was mit den Daten geschieht, wenn die Vorgaben oder andere
+    Erhaltungsmaßnahmen nicht mehr greifen?</b>
+</p>
+
+<p>
+    <b>5.3 Werden fremde Forschungsdaten oder Software verwendet, welche dem Urheberrecht, dem
+    Patenrecht oder anderen geistigen Eigentumsrechten unterliegen?
+    Wenn ja, wer besitzt die Rechte?</b>
+</p>
+<p>
+    {% render_value 'project/legal_aspects/ipr/yesno' %}
+</p>
+
+<p>
+    <b>5.4 Unterliegen die eigenen Forschungsdaten oder andere Forschungsartefakte (z.B. Software,
+    Hardware) dem Urheberrecht, dem Patentrecht oder anderen geistigen Eigentumsrechten? Wenn ja,
+    gibt es bereits Überlegungen zur Lizenzierung oder Vergabe von Nutzungsrrechten?</b>
+</p>
+
+<p>
+    <b>5.5 Existieren Schutzfristen für die eigenen Forschungsdaten, welche während des
+    Aufbewahrungszeitraumes enden?</b>
+</p>
+
+<p>
+    <b>5.6 Sind die im Projekt erzeugten Daten von einem öffentlichen Interesse?</b>
+</p>
+
+<p>
+    <b>5.7 Sind die Nutzungsziele (und die Nutzerzielgruppe) und die Anforderungen an die
+    Nutzung der Daten dokumentiert?</b>
+</p>
+
+<p>
+    <b>5.8 Wie werden die Nutzungsbeschränkungen organisatorisch gehandhabt? Sind hierfür die
+    Verantwortlichen klar definiert?</b>
+</p>
+
+<p>
+    <b>5.9 Unterliegen die erzeugten Daten dem Datenschutz?</b>
+</p>
+<p>
+    {% render_value_inline_list 'project/legal_aspects/sensitive_data/personal_data/privacy_laws' %}
+</p>
+
+<p>
+    <b>5.10 Welche Anstrengungen werden unternommen, um den Anforderungen des Datenschutzes
+    zu genügen?</b>
+</p>
+<p>
+    {% render_value 'project/legal_aspects/sensitive_data/personal_data/anonymization' %}
+</p>
+<p>
+    <b>5.11 Gibt es ethisch, kommerziell oder in anderer Hinsicht sensible Daten? Wenn ja, welche
+    Maßnahmen werden zum Schutz dieser Daten getroffen?</b>
+</p>
+<p>
+    {% render_value 'project/legal_aspects/sensitive_data/other_sensitive_data/yesno' %}
+</p>
+
+<p>
+    <b>5.12 Wer ist während des Projekts und nach dem Projekt verantwortlich für die Speicherung der
+    Daten?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/storage/responsible_person/name' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>5.13 Werden regelmäßig Sicherheitskopien der aktuellen Arbeitsdateien erzeugt? Mit
+    welchenTechnologien erfolgt dies und an welchem Ort?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/storage/backup_frequency' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>5.14 Wie sehen die technischen Lösungen für die Backupstrategie aus? (auch für
+    mobile Geräte, wie Laptops?)</b>
+</p>
+
+<h2>6. Archivierung, Datenaustausch und Datenpublikation</h2>
+
+<p>
+    <b>6.1 Wieso und für wie lange müssen Daten archiviert werden? Welche Daten sind
+    das genau, und durch wen und womit erfolgt die Auswahl der zu archivierenden Daten?</b>
+</p>
+<p>
+    {% render_value 'project/dataset/preservation/yesno' %}
+    {% render_value 'project/dataset/preservation/motivation' %}
+    {% render_value 'project/dataset/preservation/duration' %}
+    {% render_value 'project/preservation/criteria' %}
+    {% render_value_inline_list 'project/preservation/responsible_person/name' %}
+</p>
+
+<p>
+    <b>6.2 Was geschieht mit den Daten nach Ablauf der Aufbewahrungsdauer?</b>
+</p>
+
+<p>
+    <b>6.3 Ist es geplant, dass die Daten innerhalb oder außerhalb des Projekts von Anderen
+    genutzt werden? Wenn nein, bitte Gründe nennen.</b>
+</p>
+
+<p>
+    <b>6.4 Gibt es eine Verpflichtung, die Daten freizugeben?</b>
+</p>
+
+<p>
+    <b>6.5 Wie werden Veröffentlichung (Datenpublikation), Suchbarkeit und der Zugriff auf die Daten
+    realisiert? Werden hierfür institutionelle Dienste der Universität Bielefeld in Anspruch
+    genommen (z.B. DOI Registrierung)? Oder externe fachspezifische Datenservices?</b>
+</p>
+
+<p>
+    <b>6.6 Gibt es definierte Workflows für die Identifikation von Datenobjekten?</b>
+</p>
+
+<p>
+    <b>6.7 Werden Metadaten für die (maschinen-lesbare) Beschreibung von Objekten oder im Rahmen
+    der Dokumentation des Forschungsprozesses verwendet? Welchem Zweck dient das Metadatensystem?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/metadata/description' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>6.8 Welche Informationen (des Forschungsprozesses) sollen durch Metadaten
+    beschriebenwerden?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/metadata/information' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>6.9 Gibt es Metadaten, die automatisch erhoben werden können?</b>
+</p>
+{% for dataset in datasets %}
+<p>
+    <em>Datensatz {% render_set_value dataset 'project/dataset/id' %}:</em>
+    {% render_set_value dataset 'project/dataset/creation_automatic' %}
+</p>
+{% endfor %}
+
+<p>
+    <b>6.10 Welche Voraussetzungen muss Hardware und Software erfüllen, um die Metadatenverarbeiten
+    zu können? Und welche Vorkenntnisse/Fachkenntnisse sind zum Verständnis bzw/Verarbeitung dieser
+    Metadaten notwendig?</b>
+</p>
+
+<p>
+    <b>6.11 Werden bestimmte Restriktionen für die Nutzung von den publizierten Daten erhoben?</b>
+</p>
+
+<p>
+    <b>6.12 Spielt bei dem Datentausch die Interoperabilität zwischen der eigenenen Infrastruktur
+    und den anderen beteiligten Infrastrukturen eine Rolle?</b>
+</p>
+
+<h2>7. Verantwortlichkeiten und Pflichten</h2>
+
+<p>
+    <b>7.1 Wer ist innerhalb des Projekts verantwortlich für das Datenmanagement?</b>
+</p>
+
+<p>
+    <b>7.2 Gibt es eine Regelung zur Überprüfung der Einhaltung des Datenmanagement Plans?</b>
+</p>
+
+<p>
+    <b>7.3 Wie, wann und von wem wird der DMP bei Bedarf aktualisiert?</b>
+</p>
+
+<p>
+    <b>7.4 Sind andere Institutionen oder universitäre Dienste am Datenmanagement für das
+    Projektbeteiligt?</b>
+</p>
+
+<p><b>Begründung:</b></p>
+
+<h2>8. Kosten und Ressourcen</h2>
+
+<p>
+    <b>8.1 Sind die Kosten und der Personalaufwand für das Datenmanagement von Forschungsdaten
+    abgeschätzt worden?</b>
+</p>
+
+<p>
+    <b>8.2 Welche Kosten entstehen während und nach der Projektlaufzeit? Und wie hoch ist das im
+    Projekt veranschlagte Budget für Datenmanagement?</b>
+</p>
+<p>
+    Personalaufwand für das Datenmanagement im Rahmen der Erhebung, Erstellung oder Akquise der
+    Daten: {% render_value 'project/costs/creation/personnel' %}
+</p>
+<p>
+    Sachkosten für das Datenmanagement im Rahmen der Erhebung, Erstellung oder Akquise der Daten:
+    {% render_value 'project/costs/creation/expenses' %}
+</p>
+<p>
+    Personalaufwand für das Datenmanagement im Zusammenhang mit der Nutzung der Daten:
+    {% render_value 'project/costs/usage/personnel' %}
+</p>
+<p>
+    Sachkosten für das Datenmanagement im Zusammenhang mit der Nutzung der Daten:
+    {% render_value 'project/costs/usage/expenses' %}
+</p>
+<p>
+    Personalaufwand im Zusammenhang mit der Speicherung der Daten:
+    {% render_value 'project/costs/storage/personnel' %}
+</p>
+<p>
+    Sachkosten im Zusammenhang mit der Speicherung der Datensätze:
+    {% render_value 'project/costs/storage/expenses' %}
+</p>
+
+<p>
+    <b>8.3 Wurden innerhalb des Projektes die Gründe für das Management von Forschungsdaten
+    kommuniziert und sind diese allen beteiligten Mitarbeitern klar?</b>
+</p>
+
+<p>
+    <b>8.4 Stehen alle Verantwortlichen und Beteiligten hinter den Plänen zum Datenmanagement? Wenn
+    nein, ist es notwendig, den individuellen und allgemeinen Nutzen herauszuarbeiten oder
+    Anreizsysteme einzuführen?</b>
+</p>
